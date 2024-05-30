@@ -1,0 +1,72 @@
+@model List<Product>
+
+@{
+    ViewBag.Title = "Все товары";
+    Layout = "_Layout";
+}
+<style>
+	body{
+		background-color: #fbfbfb;
+	}
+</style>
+
+<h2 style="">Все товары </h2>
+
+<div class="product-container">
+	@if (Model.Count == 0)
+		{
+			<p>Список пуст</p>
+		}
+		else
+		{
+			<div class="filter">
+				<div class="btn-group"  >
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Сортировать по
+					</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" asp-action="Index" asp-controller="Products" asp-route-filter="@ViewBag.FilterName">Наименование</a>
+						<a class="dropdown-item" asp-action="Index" asp-controller="Products" asp-route-filter="@ViewBag.FilterBrand">Бренд</a>
+						<a class="dropdown-item" asp-action="Index" asp-controller="Products" asp-route-filter="@ViewBag.FilterDate">Дата Создания</a>
+						<a class="dropdown-item" asp-action="Index" asp-controller="Products" asp-route-filter="@ViewBag.FilterCategory">Категория</a>
+						<a class="dropdown-item" asp-action="Index" asp-controller="Products" asp-route-filter="@ViewBag.FilterPrice">Стоимость</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="container-product-all">
+				@foreach (var product in Model)
+				{
+					<div class="product-all-block">
+						<div class="product-all-block-box">
+							<img   src="~/@product.PhotoPath" alt="Card image cap">
+						</div>
+						<div>
+						<hr>
+						
+						<div class="product-all-block-box">
+							<p>
+								<a type="submit" asp-action="Details" asp-controller="Products" 
+								      asp-route-id="@product.Id">@product.Name</a>
+							</p>
+							<p style="margin-bottom: 10px;">
+								 Дата создания | @product.CreateDate.ToShortDateString()
+							</p>
+						</div>
+						<div class="product-all-block-box">
+							<div class="block-order">
+								<div class="order-box" style="padding-right: 9px; border-right: 1px solid silver;">
+									<p style="font-size: 14px; color: silver;">Цена</p>
+									<p><b>@product.Price ₸</b></p>
+								</div>
+								<div class="order-box" style="padding-left: 9px; margin-top: 3px;">
+									<a type="submit" class="btn btn-primary" asp-action="Create" asp-controller="Orders" asp-route-productId="@product.Id">Заказать</a>
+								</div>
+							</div>
+						</div>
+						</div>
+					</div>
+				}
+			</div>
+		}
+	</div>

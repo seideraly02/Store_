@@ -1,0 +1,82 @@
+@model Category
+
+@{
+    ViewBag.Title = "Добавить категорию";
+    Layout = "_Layout";
+    string title = "Добавить категорию";
+}
+@if (ViewBag.CategoryEvent == "Edit")
+{
+    title = "Редактировать категорию";
+}
+<h2 style="text-align: center;">@title</h2>
+
+<div class="containerBrand">
+    <div class="form-creat">
+        <div style="text-align: center">Список категории</div>
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Категория</th>
+                <th style="text-align: center">Действие</th>
+            </tr>
+            @foreach (var category in ViewBag.Categories)
+            {
+                <tr>
+                    <th>@category.Id</th>
+                    <td>@category.Name</td>
+                    <td style="text-align: center;">
+                        <a asp-action="Remove" asp-route-id="@category.Id" asp-controller="Category">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@category.Id" asp-controller="Category">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+           
+        </table>
+    </div>
+@if (ViewBag.CategoryEvent == "Edit")
+{
+    <div class="form-creat " style="border-left: none; text-align: center;">
+        <form asp-action="Edit" asp-controller="Category" method="post">
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" value="@ViewBag.category.Id">
+                <label for="brand">Наименование категории </label>
+                <input id="brand" type="text" asp-for="Name" value="@ViewBag.category.Name" class="form-control">
+            </div>
+            <div style="text-align: end">
+                <button class="btn btn-primary" type="submit">Редактировать</button>
+                <br>
+                <a asp-action="Index" asp-controller="Category" style="font-size: 12px;">Добавить категорию</a>
+            </div>
+            <span asp-validation-for="Name"></span>
+        </form>
+    </div>
+}
+else
+{
+    <div class="form-creat " style="border-left: none; text-align: center;">
+        <form asp-action="Index" asp-controller="Category" method="post">
+            <div class="form-group">
+                <label for="brand">Наименование категории </label>
+                <input id="brand" type="text" asp-for="Name" class="form-control">
+            </div>
+            <div style="text-align: end">
+                <button class="btn btn-primary" type="submit">Добавить</button>
+            </div>
+            <span asp-validation-for="Name"></span>
+        </form>
+    </div> 
+}
+    
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

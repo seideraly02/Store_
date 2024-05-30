@@ -1,0 +1,81 @@
+@model Product
+
+@{
+    ViewBag.Title = "Подробности";
+    Layout = "_Layout";
+}
+
+<h2>@Model.Name</h2>
+	
+    <div class="box-detail" style="margin-top: 20px;">
+      <div class="block1">
+        <div class="image">
+          <img  class="imgDetails"  src="~/@Model.PhotoPath" alt="">
+        </div>
+        <p class="block1-text">Чтобы увеличить, нажмите на картинку</p>
+      </div>
+      <div class="block2">
+            <div class="box-1">
+              <h4 class="block2_box-1_productname">
+                @ViewData["categoryName"] @ViewData["brandName"] @Model.Name 
+                2/32Gb черный
+              </h4>
+            </div>
+            <div class="box-2">
+              <div class="otz">
+                <p>&#9733;&#9733;&#9733;&#9733;&#9733; | <a href="">(874 отзыва</a>)</p>
+              </div>
+            </div>
+            <hr>
+            <div class="box-3">
+              <span class="box-3_in1">
+                  <p style="font-size: 15px; color: silver; margin:0;">Цена</p>
+                  <span class="box-3_in1_price" style="font-weight: bold;"> @Model.Price T</span>
+              </span>
+              <div class="box-3_in2">
+                <p style="font-size: 15px; color: silver; margin:0;">В кредит</p>
+                <p class="box-3_in1_price">
+                  <span class="span-price"> @ViewData["price12"] </span>
+                  <span style="color: silver; font-size: 15px;"> x 12 мес</span>
+                  </p>
+              </div>
+              <div class="box-3_in3">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <a type="submit" class="btn btn-secondary" asp-action="Create" asp-controller="Orders" asp-route-productId="@Model.Id">Заказать</a>
+                  @if (User.IsInRole("admin"))
+                  {
+                    <a type="submit" class="btn btn-secondary" asp-action="Edit" asp-controller="Products" asp-route-id="@Model.Id">Редактировать</a>
+                  }
+                  </div>
+              </div>
+            </div>
+            <hr>
+            <div class="box-4">
+              <div class="item__description-text">
+                - найменование : @Model.Name;<br>
+                - категория : @ViewData["categoryName"];<br>
+                - бренд : @ViewData["brandName"]<br>
+                - дата создания: @Model.CreateDate.ToShortDateString() <br>
+                - дата обнавления : @Model.UpdateDate<br>
+                - характерсистики : @Model.Description 
+              </div>
+            </div>
+            @if (User.IsInRole("admin"))
+            {
+              <div class="remove-product">
+                <div id="zatemnenie">
+                  <div id="okno">
+                    <h5>Подтвердить</h5>
+                    <a href="#" class="btn btn-dark btn-remove">Нет</a>
+                    <a class="btn btn-dark btn-remove" asp-action="Remove" asp-controller="Products" asp-route-id="@Model.Id">Да</a>
+                  </div>
+                </div>
+                <span>
+                  <a href="#zatemnenie">Удалить продукт </a>
+                </span>
+              </div>
+            }
+      </div>
+    </div>
+ 
+

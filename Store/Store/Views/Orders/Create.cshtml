@@ -1,0 +1,44 @@
+@model Order
+
+@{
+    ViewBag.Title = "Создать заказ";
+    Layout = "_Layout";
+}
+
+<h2 style="text-align: center;">Создать заказ</h2>
+<div class="container-create-product">
+<div >
+    <form asp-action="Create" asp-controller="Orders" method="post">
+        <div class="form-group">
+            <label for="">Найменование заказа</label>
+            <input type="text" class="form-control" asp-for="Name">
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+            <label for="">Адрес доставки</label>
+            <input type="text" class="form-control" asp-for="Address">
+            <span asp-validation-for="Address"></span>
+        </div>
+        <div class="form-group">
+            <label for="">Номер телефона</label>
+            <input type="text" class="form-control" asp-for="PhoneNumber">
+            <span asp-validation-for="PhoneNumber"></span>
+        </div>
+        
+        <div class="form-group">
+            <label for="">Продукт</label>
+            <input type="text" class="form-control" value="@Model.Product.Name" disabled>
+            <input type="hidden" asp-for="ProductId" value="@Model.Product.Id">
+            <span asp-validation-for="ProductId"></span>
+        </div>
+        <button type="submit" class="form-control">Заказать</button>
+    </form>
+</div>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
